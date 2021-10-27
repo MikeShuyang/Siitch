@@ -523,9 +523,18 @@ export const comparePage = ({route}) => {
         <View style={{flex: 6,flexDirection:'column',alignItems:'center', marginBottom:0, paddingLeft: 10, paddingRight: 10}}>
           <View style={{flex:2, flexDirection:'row',justifyContent:'space-between'}}>
             <View center style={getTextStyle(parseInt(f1[selectedcategory1]*prod1Total), getMinValue())}>
-              {(selectedcategory1.localeCompare('Time to decompose') != 0  && <Counter buttonStyle={{ borderWidth: 2 }} start={1}  onChange={(len, type) => {
-                changeProd1Total(prod1Total + (type == "+" ? 1 : -1));
-            }}/>) ||  <Text style={{marginBottom: 23}}>  </Text>} 
+              
+                {(selectedcategory1.localeCompare('Time to decompose') != 0  &&
+                 <View style={styles.counterView}>
+                 <Counter
+                  buttonStyle={{ borderWidth: 0 }} 
+                  buttonTextStyle={{ color: '#0e0f0f', fontSize: 25, fontWeight: '500'}}
+                  countTextStyle={{ color: '#0e0f0f', fontSize: 21}} start={1}  onChange={(len, type) => {
+                    changeProd1Total(prod1Total + (type == "+" ? 1 : -1));
+                    //firebase.database().ref(`/Future Library/Fruit`).set([{"Total" : 14}]);
+                }}/>
+                </View>) ||  <Text style={{marginBottom: 23}}>  </Text>} 
+              
               <Image source = {Profiles[prod1]}
                 style = {{width: 180, height: 180, alignItems:'center'}}
                 resizeMode="contain"/>
@@ -541,9 +550,16 @@ export const comparePage = ({route}) => {
                 <Text style={styles.textFormatCompare}>{f1[selectedsize]}</Text>
             </View>
             <View center style={getTextStyle(parseInt(f2[selectedcategory2]*prod2Total), getMinValue())}>
-              {(selectedcategory2.localeCompare('Time to decompose') != 0  && <Counter buttonStyle={{ borderWidth: 2 }} start={1}  onChange={(len, type) => {
-                changeProd2Total(prod2Total + (type == "+" ? 1 : -1))
-            }}/>) ||  <Text style={{marginBottom: 23}}>  </Text>} 
+              
+                {(selectedcategory2.localeCompare('Time to decompose') != 0  && 
+                <View style={styles.counterView}>
+                  <Counter
+                  buttonStyle={{ borderWidth: 0 }} 
+                  buttonTextStyle={{ color: '#0e0f0f', fontSize: 25, fontWeight: '500'}}
+                  countTextStyle={{ color: '#0e0f0f', fontSize: 21}} start={1}  onChange={(len, type) => {
+                    changeProd2Total(prod2Total + (type == "+" ? 1 : -1))
+                  }}/>
+                </View>) ||  <Text style={{marginBottom: 23}}>  </Text>} 
               <Image source = {Profiles[prod2]} 
                 style = {{width: 180, height: 180, alignItems:'center'}}
                 resizeMode="contain"/>
@@ -565,9 +581,16 @@ export const comparePage = ({route}) => {
               {
                 isProduct3Present &&
                 <View center style={getTextStyle(parseInt(f3[selectedcategory3]*prod3Total), getMinValue())}>
-                  {(selectedcategory3.localeCompare('Time to decompose') != 0  && <Counter buttonStyle={{ borderWidth: 2 }} start={1}  onChange={(len, type) => {
-                changeProd3Total(prod3Total + (type == "+" ? 1 : -1))
-            }}/>) ||  <Text style={{marginBottom: 23}}>  </Text>} 
+                      {(selectedcategory3.localeCompare('Time to decompose') != 0  && 
+                      <View style={styles.counterView}>
+                        <Counter 
+                        buttonStyle={{ borderWidth: 0 }} 
+                        buttonTextStyle={{ color: '#0e0f0f', fontSize: 25, fontWeight: '500'}} 
+                        countTextStyle={{ color: '#0e0f0f', fontSize: 21}}
+                        start={1}  onChange={(len, type) => {
+                      changeProd3Total(prod3Total + (type == "+" ? 1 : -1))
+                    }}/>
+                      </View>) ||  <Text style={{marginBottom: 23}}>  </Text>} 
                   <Image source = {Profiles[prod3]}
                     style = {{width: 180, height: 180, alignItems:'center'}}
                     resizeMode="contain"/>
@@ -586,9 +609,18 @@ export const comparePage = ({route}) => {
               {
                 isProduct4Present &&
                 <View center style={getTextStyle(parseInt(f4[selectedcategory4]*prod4Total), getMinValue())}>
-                  {(selectedcategory4.localeCompare('Time to decompose') != 0  && <Counter buttonStyle={{ borderWidth: 2 }} start={1}  onChange={(len, type) => {
-                changeProd4Total(prod4Total + (type == "+" ? 1 : -1))
-            }}/>) ||  <Text style={{marginBottom: 23}}>  </Text>} 
+                  
+                    {(selectedcategory4.localeCompare('Time to decompose') != 0  &&
+                    <View style={styles.counterView}> 
+                      <Counter  
+                        buttonStyle={{ borderWidth: 0 }} 
+                        buttonTextStyle={{ color: '#0e0f0f', fontSize: 25, fontWeight: '500'}} 
+                        countTextStyle={{ color: '#0e0f0f', fontSize: 21}} 
+                        start={1}  onChange={(len, type) => {
+                      changeProd4Total(prod4Total + (type == "+" ? 1 : -1))
+                      }}/>
+                      </View>) ||  <Text style={{marginBottom: 23}}>  </Text>} 
+                  
                   <Image source = {Profiles[prod4]} 
                     style = {{width: 180, height: 180, alignItems:'center'}}
                     resizeMode="contain"/>
@@ -612,9 +644,16 @@ export const comparePage = ({route}) => {
               {
                 isProduct5Present &&
                 <View center style={getTextStyle(parseInt(f5[selectedcategory5]*prod5Total), getMinValue())}>
-                  {(selectedcategory5.localeCompare('Time to decompose') != 0  && <Counter buttonStyle={{ borderWidth: 2 }} start={1}  onChange={(len, type) => {
-                changeProd5Total(prod5Total + (type == "+" ? 1 : -1))
-            }}/>) ||  <Text style={{marginBottom: 23}}>  </Text>} 
+                    {(selectedcategory5.localeCompare('Time to decompose') != 0  && 
+                    <View style={styles.counterView}>
+                      <Counter  
+                        buttonStyle={{ borderWidth: 0 }} 
+                        buttonTextStyle={{ color: '#0e0f0f', fontSize: 25, fontWeight: '500'}} 
+                        countTextStyle={{ color: '#0e0f0f', fontSize: 21}} 
+                        start={1}  onChange={(len, type) => {
+                      changeProd5Total(prod5Total + (type == "+" ? 1 : -1))
+                      }}/>
+                       </View>) ||  <Text style={{marginBottom: 23}}>  </Text>} 
                   <Image source = {Profiles[prod5]}
                     style = {{width: 180, height: 180, alignItems:'center'}}
                     resizeMode="contain"/>
@@ -633,9 +672,18 @@ export const comparePage = ({route}) => {
               {
                 isProduct6Present &&
                 <View center style={getTextStyle(parseInt(f6[selectedcategory6]*prod6Total), getMinValue())}>
-                  {(selectedcategory6.localeCompare('Time to decompose') != 0  && <Counter buttonStyle={{ borderWidth: 2 }} start={1}  onChange={(len, type) => {
-                changeProd6Total(prod6Total + (type == "+" ? 1 : -1))
-            }}/>) ||  <Text style={{marginBottom: 23}}>  </Text>} 
+                 
+                    {(selectedcategory6.localeCompare('Time to decompose') != 0  && 
+                     <View style={styles.counterView}>
+                    <Counter  
+                      buttonStyle={{ borderWidth: 0 }} 
+                      buttonTextStyle={{ color: '#0e0f0f', fontSize: 25, fontWeight: '500'}} 
+                      countTextStyle={{ color: '#0e0f0f', fontSize: 21}} 
+                      start={1}  onChange={(len, type) => {
+                    changeProd6Total(prod6Total + (type == "+" ? 1 : -1))
+                    }}/>
+                    </View>) ||  <Text style={{marginBottom: 23}}>  </Text>} 
+                  
                   <Image source = {Profiles[prod6]} 
                     style = {{width: 180, height: 180, alignItems:'center'}}
                     resizeMode="contain"/>

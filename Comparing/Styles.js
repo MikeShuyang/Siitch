@@ -283,6 +283,11 @@ const styles = StyleSheet.create({
     marginTop: 30,
     fontSize: 25,
     fontWeight: '500'
-  }
+  },
+  counterView: {
+    borderWidth:1, 
+    borderColor: '#0e0f0f', 
+    borderRadius:50
+  },
 });
 export {styles};

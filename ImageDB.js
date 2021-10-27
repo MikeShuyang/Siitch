@@ -27,6 +27,7 @@ const Profiles = {
     'gray water': require('./images/gray_water_3.png'),
     'blue water': require('./images/blue_water_3.png'),
     'green water': require('./images/green_water_3.png'),
+    arrow: require('./images/arrow.png'),
     Beef: require('./images/Image_new/Meats/beef.png'),
     Lamb: require('./images/Image_new/Meats/lamb.png'),
     Pork: require('./images/Image_new/Meats/pork.png'),
