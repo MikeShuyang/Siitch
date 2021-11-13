@@ -185,6 +185,7 @@ function CalculateScreen() {
         fetchedData = data.val();
 
         for (let item in fetchedData) {
+          if (item == 'Future Library') continue;
           itemsList.push({
             name: item,
           });

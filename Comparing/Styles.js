@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
   },
   boldTextFormatRedCompare: {
     textAlign: 'center',
-    fontSize:25,
+    fontSize: 25,
     fontWeight:'bold',
     color: '#ef0100'
   },
@@ -287,7 +287,8 @@ const styles = StyleSheet.create({
   counterView: {
     borderWidth:1,
     borderColor: '#0e0f0f',
-    borderRadius:50
-  },
+    borderRadius:50,
+    marginTop: 20
+  }
 });
 export {styles};

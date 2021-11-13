@@ -7,11 +7,12 @@ import { // Native components
     TouchableHighlight,
     TouchableOpacity,
     View,
-    TextInput
+    TextInput,
+    Animated
 } from "react-native";
 import {styles} from "../Search/Style";
 import * as React from "react";
-import {useEffect, useState} from "react";
+import {useEffect, useState, useRef} from "react";
 // Firebase
 import firebase from "firebase";
 // Used to display category images
@@ -26,6 +27,8 @@ import {CategoryIcon} from "../Ranking/CategoryIcon";
 import DropDownPicker from 'react-native-dropdown-picker';
 
 const DeviceWidth = Dimensions.get('window').width;
+
+
 
 // Leveraged from Search
 export default function Catalogue ({navigation}){
@@ -44,6 +47,17 @@ export default function Catalogue ({navigation}){
     const [newItem, addItem] = useState(null);
     const [itemCategory, setCategory] = useState("");
     const [categoryChosen, showSubmit] = useState(false);
+    const [disableSubmit, toggleSubmit] = useState(false);
+    //Animation for thank you button fade out
+    const fadeAnim = useRef(new Animated.Value(1)).current;
+    function fadeOut() {
+        // Will change fadeAnim value to 0 in 2 seconds
+        Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 2000
+        }).start();
+    };
+
     const keyboard = new Map([
         ['a', new Set(['q', 'w', 's', 'x', 'z', ' '])],
         ['b', new Set(['v', 'g', 'h', 'n', ' '])],
@@ -74,7 +88,7 @@ export default function Catalogue ({navigation}){
         [' ', new Set()]
     ]);
     const optionsData = [
-        {label: "Meat", value:"Meat"},
+        {label:"Meat", value:"Meat"},
         {label:"Fruit", value:"Fruit"},
         {label:"Vegetable", value:"Vegetable"},
         {label:"Everyday, Food", value:"Everyday Food"},
@@ -170,12 +184,13 @@ export default function Catalogue ({navigation}){
             .ref('/Future Library/' + category)
             .once('value', data => {
                 const futureLibrary = data.val();
-                console.log(data.val())
                 let idx = 0;
                 for (let frequency of futureLibrary) {
                     //We already have this item
                     for (let pastItem in frequency) {
-                        freqMap.set(frequency[pastItem], idx);
+                        if (pastItem !== 'Total') {
+                            freqMap.set(frequency[pastItem], idx);
+                        }
                         if (editDistance(pastItem.toLowerCase(), cleanItem) <= sameItemThreshold) {
                             let freq = frequency[pastItem] + 1;
                             if (freqMap.has(freq)) {
@@ -192,8 +207,13 @@ export default function Catalogue ({navigation}){
                     idx += 1;
                 }
                 //We don't have this item yet, lets add it
-                futureLibrary.push({});
-                futureLibrary[futureLibrary.length-1][`${cleanItem}`] = 1;
+                if (freqMap.has(1)) {
+                    futureLibrary[freqMap.get(1)][`${cleanItem}`] = 1;
+                } else {
+                    futureLibrary.push({});
+                    futureLibrary[futureLibrary.length-1][`${cleanItem}`] = 1;
+                }
+                
                 reUploadItems(futureLibrary, category);
             });
     }
@@ -232,7 +252,7 @@ export default function Catalogue ({navigation}){
         //Try all possible solutions, storing subproblem answers, to find ultimate minimum edit distance
         for (let i=1; i<=n; ++i) {
             for (let j=1; j<=m; ++j) {
-                let adjSet = keyboard.get(word1.charAt(i-1));
+                let adjSet = (keyboard.get(word1.charAt(i-1)) != null ? keyboard.get(word1.charAt(i-1)) : new Set());
                 if (word1.charAt(i-1) === word2.charAt(j-1))
                     dp[i][j] = dp[i-1][j-1];
                 else
@@ -245,7 +265,10 @@ export default function Catalogue ({navigation}){
 
     const reset = () => {
         showThankYou(false);
+        showCategories(false);
         showSubmit(false);
+        toggleSubmit(false);
+        fadeAnim.setValue(1);
     }
 
     const prepareForSubmit = (category) => {
@@ -264,7 +287,7 @@ export default function Catalogue ({navigation}){
                 color: 'black',
                 fontWeight: 'bold',
                 fontSize: 20,
-                marginTop: 40,
+                marginTop: 20,
                 marginBottom: 5,
             }}>Search or explore categories below</Text>
             <Searchbar
@@ -293,28 +316,10 @@ export default function Catalogue ({navigation}){
             <View style={this_styles.container}>
                 <TextInput style={this_styles.input}
                            placeholder="Enter item"
+                           placeholderTextColor = '#757575'
                            maxLength={30}
                            value = {newItem}
-                           onChangeText={item => { addItem(item); showCategories(true);} }
-                />
-                {categoryChosen && newItem !== "" &&
-                <View style={{alignContent: 'center', justifyContent:'center'}}>
-                    <TouchableOpacity
-                        style={this_styles.submit}
-                        onPress={ () => {
-                            showThankYou(true);
-                            showCategories(false);
-                            addEntry(newItem, itemCategory);
-                            addItem(null);
-                            setTimeout(reset, 2000);
-                        }}>
-                        <Image style={{
-                            width: 40,
-                            height: 40,
-                        }} source={Profiles.arrow}/>
-                    </TouchableOpacity>
-                </View>
-                }
+                           onChangeText={item => { addItem(item); showCategories(true);} }/>
             </View>
 
 
@@ -368,11 +373,59 @@ export default function Catalogue ({navigation}){
                 />
             </View>
             }
-            {thankYou &&
+            {categoryChosen && newItem !== "" &&
+                <Animated.View style={{alignContent: 'center', justifyContent:'center', flex: 1, opacity: fadeAnim}}>
+                    <TouchableOpacity
+                        style={!thankYou ? this_styles.submit : this_styles.thankYou}
+                        disabled={disableSubmit}
+                        onPress={() => {
+                            showThankYou(true);
+                            addEntry(newItem, itemCategory);
+                            addItem(null);
+                            toggleSubmit(true);
+                            setTimeout(reset, 2000);
+                            fadeOut();
+                        }}>
+                        {!thankYou && <Text style={this_styles.submitTxt}> All done? </Text>}
+                        {thankYou && <Text style={this_styles.thankYouTxt}> Thank you! </Text>}
+                    </TouchableOpacity>
+                </Animated.View>
+
+                /*   
+                
+                {categoryChosen && newItem !== "" &&
+                <View style={{alignContent: 'center', justifyContent:'center'}}>
+                    <TouchableOpacity
+                        style={this_styles.submit}
+                        onPress={ () => {
+                            showThankYou(true);
+                            showCategories(false);
+                            addEntry(newItem, itemCategory);
+                            addItem(null);
+                            setTimeout(reset, 2000);
+                        }}>
+                        <Image style={{
+                            width: 40,
+                            height: 40,
+                        }} source={Profiles.arrow}/>
+                    </TouchableOpacity>
+                </View>
+                }
+                
+                <Image style={{
+                            width: 40,
+                            height: 40,
+                        }} source={Profiles.arrow}/>
+                        
+                                    {thankYou &&
             <View style={this_styles.thankYouBG}>
                 <Text style={this_styles.thankYou}> Thank You </Text>
             </View>
             }
+                        
+                        */
+            }
+
 
             {/* If there is no user input in the search bar, show categories */}
             {!searching && (
@@ -459,43 +512,51 @@ export default function Catalogue ({navigation}){
 
 const this_styles = StyleSheet.create({
     container: {
-        margin: 30,
+        //margin: 30,
         borderWidth: 2,
         borderRadius: 20,
         height: 50,
         borderColor: '#80CAFF',
         flexDirection: 'row',
-
-
-        //marginTop: 20,
+        marginTop: 20,
         width: DeviceWidth * 0.7,
         textAlign: 'center',
         fontSize: 20,
     },
     input: {
         fontSize: 20,
+        color: 'black',
         textAlign: 'center',
         flex:4
     },
     submit: {
-        height: 40,
-        width: 40,
-        borderRadius: 50,
-        backgroundColor: '#00ADEF',
+        height: 50,
+        width: DeviceWidth*.4,
+        borderRadius: 40,
+        backgroundColor: '#8DC73F',
         justifyContent: 'center',
         alignItems: 'center',
-        margin: 3
+        marginTop: 10
     },
-    thankYouBG: {
-        justifyContent: 'center',
-        alignItems:'center',
-        backgroundColor: '#00ADEF',
-        borderRadius: 10,
-        margin: 50,
-        height: 50
+    submitTxt: {
+        color: 'white',
+        fontSize: 17,
+        fontWeight: '500'
     },
     thankYou: {
-        fontSize: 22,
-        color: 'white',
+        height: 50,
+        width: DeviceWidth*.4,
+        borderRadius: 40,
+        borderWidth: 2,
+        borderColor: '#8DC73F',
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 10
+    },
+    thankYouTxt: {
+        color: '#8DC73F',
+        fontSize: 17,
+        fontWeight: '500'
     }
 });

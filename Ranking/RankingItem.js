@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, Image, Dimensions } from 'react-native';
+import { View, Text, Image, Dimensions, StyleSheet } from 'react-native';
 import * as Progress from 'react-native-progress';
 
 const DeviceWidth = Dimensions.get('window').width;
+const DeviceHeight = Dimensions.get('window').height;
 
 export const RankingItem = ({ max, cost, item, image, unit, category }) => {
 
@@ -13,61 +14,72 @@ export const RankingItem = ({ max, cost, item, image, unit, category }) => {
     }
 
     const sliceItem = (category, item) => {
-        if(category === "Drinks - All" && item.indexOf(' ') >= 0) {
-            let first = item.slice(0, item.search(" "));
-            let second = item.slice(item.search(" ")+1);
-            return (
-                <View>
-                    <Text style={{fontSize: 13, marginLeft: 16, color: '#000000'}}>
-                        {first}
-                    </Text>
-                    <Text style={{fontSize: 13, marginLeft: 10, color: '#000000'}}>
-                        &nbsp; {second}
-                    </Text>
-                </View>
-            )
-        }
-        else {
-            return (
-                <Text style={{fontSize: 13, marginLeft: 15, color: '#000000'}}>
-                    {item}
-                </Text>
-            )
-        }
+        return (
+            <Text style={rankStyles.itemTxt}>
+                {item}
+            </Text>
+        )
     }
 
     return (
-        <View>
-            <View style={{flexDirection: 'row'}}>
+        <View style = {rankStyles.container}>
+            <View style={rankStyles.itemCol}>
                 <Image
-                    style={{height: 45, width: 45, marginTop: 10, marginBottom: 10, marginLeft: 10, marginRight: 20}}
+                    style={rankStyles.itemImg}
                     source={image}
                 />
+                { sliceItem(category, item) }
+            </View>
+            <View style={rankStyles.progressCol}>
                 <Progress.Bar
                     progress={percentage}
-                    width={DeviceWidth*0.80}
-                    height={10}
-                    borderColor="white"
-                    paddingTop={35}
+                    width={DeviceWidth*0.70}
+                    height={12}
+                    borderColor="#c9c9c9"
                     color="#81CAFF"
                 />
-            </View>
-            <View style={{flexDirection: 'row'}}>
-                {
-                    sliceItem(category, item)
-                }
-                <Text
-                    style={{
-                        fontSize: 13,
-                        color: 'gray',
-                        fontWeight: 'bold',
-                        marginRight: 20,
-                        paddingLeft: 20
-                    }}
-                >
+                <Text style={rankStyles.progressTxt}>
                     {numberWithCommas(cost)} {unit === 'L' ? 'Liters' : 'Gallons'}
                 </Text>
             </View>
         </View>
     )
 }
+
+const rankStyles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+    },
+    //Item Picture and Name
+    itemCol: {
+        flexDirection: 'column',
+        marginLeft: 10,
+        marginBottom: 10,
+        width: DeviceWidth*.2,
+        alignItems: 'center',
+    },
+    itemTxt: {
+       fontSize: 14,
+       fontWeight: '600',
+       textAlign: 'center', 
+       color: '#000000'
+   },
+   itemImg: {
+       height: DeviceWidth*.15, 
+       width: DeviceWidth*.15,
+   },
+   //Progress Bar and Total
+   progressCol: {
+       flexDirection: 'column',
+       height: DeviceHeight*.12,
+       alignItems: 'flex-start',
+       justifyContent: 'center',
+       marginLeft: 10,
+   },
+   progressTxt: {
+        fontSize: 20,
+        fontWeight: '500',
+        color: 'dimgrey',
+        marginRight: 20,
+   }
+});

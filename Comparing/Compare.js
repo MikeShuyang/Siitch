@@ -57,11 +57,15 @@ function getdata() {
         .once('value', data => {
             fetchedData = data.val();
             for (var item in fetchedData) {
+                if (item == 'Future Library') continue;
                 this.itemsList.push({
                     name: item,
                 });
             }
         });
+        
+        
+        //delete this.itemsList.libKey;
 }
 
 export default class Compare extends Component {

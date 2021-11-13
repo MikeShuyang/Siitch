@@ -76,7 +76,6 @@ export const comparePage = ({route}) => {
         measurementId: 'G-13MVLQ6ZPF',
     };
 
-
     const fetchData1 = () => {
         if (!firebase.apps.length) {
             firebase.initializeApp(config);
@@ -377,52 +376,59 @@ export const comparePage = ({route}) => {
     const selectedtext = setMetrictext()
 
     const getMinValue = () => {
+        let prod1Val = selectedcategory1.localeCompare('Time to decompose') != 0 ? parseInt(f1[selectedcategory1]*prod1Total) : Number.MAX_VALUE;
+        let prod2Val = selectedcategory2.localeCompare('Time to decompose') != 0 ? parseInt(f2[selectedcategory2]*prod2Total) : Number.MAX_VALUE;
+        let prod3Val = selectedcategory3.localeCompare('Time to decompose') != 0 ? parseInt(f3[selectedcategory3]*prod3Total) : Number.MAX_VALUE;
+        let prod4Val = selectedcategory4.localeCompare('Time to decompose') != 0 ? parseInt(f4[selectedcategory4]*prod4Total) : Number.MAX_VALUE;
+        let prod5Val = selectedcategory5.localeCompare('Time to decompose') != 0 ? parseInt(f5[selectedcategory5]*prod5Total) : Number.MAX_VALUE;
+        let prod6Val = selectedcategory6.localeCompare('Time to decompose') != 0 ? parseInt(f6[selectedcategory6]*prod1Total) : Number.MAX_VALUE;
+
         if(prod3 && !prod4 && !prod5 && !prod6) {
-            return Math.min(parseInt(f1[selectedcategory1]*prod1Total), parseInt(f2[selectedcategory2]*prod2Total), parseInt(f3[selectedcategory3]*prod3Total));
+            return Math.min(prod1Val, prod2Val, prod3Val);
         }
         else if (!prod3 && prod4 && !prod5 && !prod6) {
-            return Math.min(parseInt(f1[selectedcategory1]*prod1Total), parseInt(f2[selectedcategory2]*prod2Total), parseInt(f4[selectedcategory4]*prod4Total));
+            return Math.min(prod1Val, prod2Val, prod4Val);
         }
         else if (!prod3 && !prod4 && prod5 && !prod6) {
-            return Math.min(parseInt(f1[selectedcategory1]*prod1Total), parseInt(f2[selectedcategory2]*prod2Total), parseInt(f5[selectedcategory5]*prod5Total));
+            return Math.min(prod1Val, prod2Val, prod5Val);
         }
         else if (!prod3 && !prod4 && !prod5 && prod6) {
-            return Math.min(parseInt(f1[selectedcategory1]*prod1Total), parseInt(f2[selectedcategory2]*prod2Total), parseInt(f6[selectedcategory6]*prod6Total));
+            return Math.min(prod1Val, prod2Val, prod6Val);
         }
         else if(prod3 && prod4 && !prod5 && !prod6) {
-            return Math.min(parseInt(f1[selectedcategory1]*prod1Total), parseInt(f2[selectedcategory2]*prod2Total), parseInt(f3[selectedcategory3]*prod3Total), parseInt(f4[selectedcategory4]*prod4Total));
+            return Math.min(prod1Val, prod2Val, prod3Val, prod4Val);
         }
         else if(prod3 && !prod4 && prod5 && !prod6) {
-            return Math.min(parseInt(f1[selectedcategory1]*prod1Total), parseInt(f2[selectedcategory2]*prod2Total), parseInt(f3[selectedcategory3]*prod3Total), parseInt(f5[selectedcategory5]*prod5Total));
+            return Math.min(prod1Val, prod2Val, prod3Val, prod5Val);
         }
         else if(prod3 && !prod4 && !prod5 && prod6) {
-            return Math.min(parseInt(f1[selectedcategory1]*prod1Total), parseInt(f2[selectedcategory2]*prod2Total), parseInt(f3[selectedcategory3]*prod3Total), parseInt(f6[selectedcategory6]*prod6Total));
+            return Math.min(prod1Val, prod2Val, prod3Val, prod6Val);
         }
         else if(!prod3 && prod4 && prod5 && !prod6) {
-            return Math.min(parseInt(f1[selectedcategory1]*prod1Total), parseInt(f2[selectedcategory2]*prod2Total), parseInt(f4[selectedcategory4]*prod4Total), parseInt(f5[selectedcategory5]*prod5Total));
+            return Math.min(prod1Val, prod2Val, prod4Val, prod5Val);
         }
         else if(!prod3 && prod4 && !prod5 && prod6) {
-            return Math.min(parseInt(f1[selectedcategory1]*prod1Total), parseInt(f2[selectedcategory2]*prod2Total), parseInt(f4[selectedcategory4]*prod4Total), parseInt(f6[selectedcategory6]*prod6Total));
+            return Math.min(prod1Val, prod2Val, prod4Val, prod6Val);
         }
         else if(!prod3 && !prod4 && prod5 && prod6) {
-            return Math.min(parseInt(f1[selectedcategory1]*prod1Total), parseInt(f2[selectedcategory2]*prod2Total), parseInt(f5[selectedcategory5]*prod5Total), parseInt(f6[selectedcategory6]*prod6Total));
+            return Math.min(prod1Val, prod2Val, prod5Val, prod6Val);
         }
         else if(prod3 && prod4 && prod5 && !prod6) {
-            return Math.min(parseInt(f1[selectedcategory1]*prod1Total), parseInt(f2[selectedcategory2]*prod2Total), parseInt(f3[selectedcategory3]*prod3Total), parseInt(f4[selectedcategory4]*prod4Total), parseInt(f5[selectedcategory5]*prod5Total));
+            return Math.min(prod1Val, prod2Val, prod3Val, prod4Val, prod5Val);
         }
         else if(prod3 && !prod4 && prod5 && prod6) {
-            return Math.min(parseInt(f1[selectedcategory1]*prod1Total), parseInt(f2[selectedcategory2]*prod2Total), parseInt(f3[selectedcategory3]*prod3Total), parseInt(f5[selectedcategory5]*prod5Total), parseInt(f6[selectedcategory6]*prod6Total));
+            return Math.min(prod1Val, prod2Val, prod3Val, prod5Val, prod6Val);
         }
         else if(prod3 && prod4 && !prod5 && prod6) {
-            return Math.min(parseInt(f1[selectedcategory1]*prod1Total), parseInt(f2[selectedcategory2]*prod2Total), parseInt(f3[selectedcategory3]*prod3Total), parseInt(f4[selectedcategory4]*prod4Total), parseInt(f6[selectedcategory6]*prod6Total));
+            return Math.min(prod1Val, prod2Val, prod3Val, prod4Val, prod6Val);
         }
         else if(!prod3 && prod4 && prod5 && prod6) {
-            return Math.min(parseInt(f1[selectedcategory1]*prod1Total), parseInt(f2[selectedcategory2]*prod2Total), parseInt(f4[selectedcategory4]*prod4Total), parseInt(f5[selectedcategory5]*prod5Total), parseInt(f6[selectedcategory6]*prod6Total));
+            return Math.min(prod1Val, prod2Val, prod4Val, prod5Val, prod6Val);
         }
         else if(prod3 && prod4 && prod5 && prod6) {
-            return Math.min(parseInt(f1[selectedcategory1]*prod1Total), parseInt(f2[selectedcategory2]*prod2Total), parseInt(f3[selectedcategory3]*prod3Total), parseInt(f4[selectedcategory4]*prod4Total), parseInt(f5[selectedcategory5]*prod5Total), parseInt(f6[selectedcategory6]*prod6Total));
+            return Math.min(prod1Val, prod2Val, prod3Val, prod4Val, prod5Val, prod6Val);
         }
-        return Math.min(parseInt(f1[selectedcategory1]*prod1Total), parseInt(f2[selectedcategory2]*prod2Total));
+        return Math.min(prod1Val, prod2Val);
     }
 
     const numberWithCommas = (x) => {
@@ -467,12 +473,13 @@ export const comparePage = ({route}) => {
                         }}>
                             <Image style={{width: 20, height: 20, marginTop: '3%'}} source={Profiles.water}/>
                             <Text style={{fontSize: 25, marginTop: '1%'}}> Total: {
-                                (selectedcategory1.localeCompare('Time to decompose') != 0 && parseInt(f1[selectedcategory1])*prod1Total) +
+                                ((selectedcategory1.localeCompare('Time to decompose') != 0 && parseInt(f1[selectedcategory1])*prod1Total) +
                                 (selectedcategory2.localeCompare('Time to decompose') != 0 && parseInt(f2[selectedcategory2])*prod2Total) +
                                 ((selectedcategory3.localeCompare('Time to decompose') != 0 && isProduct3Present) ? parseInt(f3[selectedcategory3])*prod3Total : 0) +
                                 ((selectedcategory4.localeCompare('Time to decompose') != 0 && isProduct4Present) ? parseInt(f4[selectedcategory4])*prod4Total : 0) +
                                 ((selectedcategory5.localeCompare('Time to decompose') != 0 && isProduct5Present) ? parseInt(f5[selectedcategory5])*prod5Total : 0) +
-                                ((selectedcategory6.localeCompare('Time to decompose') != 0 && isProduct6Present) ? parseInt(f6[selectedcategory6])*prod6Total : 0) }
+                                ((selectedcategory6.localeCompare('Time to decompose') != 0 && isProduct6Present) ? parseInt(f6[selectedcategory6])*prod6Total : 0))
+                                .toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }
                                 {unit == 'G' ? ' gal.' : ' li.'} </Text>
                         </View>
                     </View>
@@ -531,7 +538,21 @@ export const comparePage = ({route}) => {
                                         buttonTextStyle={{ color: '#0e0f0f', fontSize: 25, fontWeight: '500'}}
                                         countTextStyle={{ color: '#0e0f0f', fontSize: 21}} start={1}  onChange={(len, type) => {
                                         changeProd1Total(prod1Total + (type == "+" ? 1 : -1));
-                                        //firebase.database().ref(`/Future Library/Fruit`).set([{"Total" : 14}]);
+                                        /* These firebase calls reset the Future Library by pressing + on the item1 counter in the compare tool*/
+                                        /*
+                                        firebase.database().ref(`/Future Library/Meat`).set([{"Total" : 0}]);
+                                        firebase.database().ref(`/Future Library/Fruit`).set([{"Total" : 0}]);
+                                        firebase.database().ref(`/Future Library/Vegetable`).set([{"Total" : 0}]);
+                                        firebase.database().ref(`/Future Library/Everyday Food`).set([{"Total" : 0}]);
+                                        firebase.database().ref(`/Future Library/Everyday Item`).set([{"Total" : 0}]);
+                                        firebase.database().ref(`/Future Library/Nuts, Beans`).set([{"Total" : 0}]);
+                                        firebase.database().ref(`/Future Library/Seeds`).set([{"Total" : 0}]);
+                                        firebase.database().ref(`/Future Library/Grains`).set([{"Total" : 0}]);
+                                        firebase.database().ref(`/Future Library/Oils`).set([{"Total" : 0}]);
+                                        firebase.database().ref(`/Future Library/Drink - Alcoholic`).set([{"Total" : 0}]);
+                                        firebase.database().ref(`/Future Library/Drink - NonAlcoholic`).set([{"Total" : 0}]);
+                                        firebase.database().ref(`/Future Library/Not Sure!`).set([{"Total" : 0}]);
+                                        */
                                     }}/>
                                 </View>) ||  <Text style={{marginBottom: 23}}>  </Text>}
 
@@ -565,10 +586,10 @@ export const comparePage = ({route}) => {
                                    resizeMode="contain"/>
                             <Text style={styles.boldTextFormatCompare}>{prod2}</Text>
                             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                                {selectedcategory2.localeCompare('Time to decompose') != 0 && <Image
-                                    style={{width: 20, height: 20, marginTop: '3%'}}
-                                    source={Profiles.water}
-                                />}
+                                {<Image
+                                    style={selectedcategory2.localeCompare('Time to decompose') != 0 && {width: 20, height: 20, marginTop: '3%'} || {width: 28, height: 28, marginTop: '1%'}}
+                                    source={selectedcategory2.localeCompare('Time to decompose') != 0 && Profiles.water || Profiles.clock}
+                                /> }
                                 <Text style={selectedcategory2.localeCompare('Time to decompose') != 0 && styles.boldTextFormatBlueCompare || styles.boldTextFormatRedCompare}>{numberWithCommas(parseInt(f2[selectedcategory2])*prod2Total)} {f2[selectedmetrictodisplay]}</Text>
                             </View>
                             <Text style={styles.textFormatCompare}>{f2[selectedmeasurement]}</Text>
@@ -596,10 +617,10 @@ export const comparePage = ({route}) => {
                                            resizeMode="contain"/>
                                     <Text style={styles.boldTextFormatCompare}>{prod3}</Text>
                                     <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                                        {selectedcategory3.localeCompare('Time to decompose') != 0 && <Image
-                                            style={{width: 20, height: 20, marginTop: '3%'}}
-                                            source={Profiles.water}
-                                        />}
+                                        {<Image
+                                            style={selectedcategory3.localeCompare('Time to decompose') != 0 && {width: 20, height: 20, marginTop: '3%'} || {width: 28, height: 28, marginTop: '1%'}}
+                                            source={selectedcategory3.localeCompare('Time to decompose') != 0 && Profiles.water || Profiles.clock}
+                                        /> }
                                         <Text style={selectedcategory3.localeCompare('Time to decompose') != 0 && styles.boldTextFormatBlueCompare || styles.boldTextFormatRedCompare}>{numberWithCommas(parseInt(f3[selectedcategory3])*prod3Total)} {f3[selectedmetrictodisplay]}</Text>
                                     </View>
                                     <Text style={styles.textFormatCompare}>{f3[selectedmeasurement]}</Text>
@@ -626,9 +647,9 @@ export const comparePage = ({route}) => {
                                            resizeMode="contain"/>
                                     <Text style={styles.boldTextFormatCompare}>{prod4}</Text>
                                     <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                                        {selectedcategory4.localeCompare('Time to decompose') != 0 && <Image
-                                            style={{width: 20, height: 20, marginTop: '3%'}}
-                                            source={Profiles.water}
+                                        {<Image
+                                            style={selectedcategory4.localeCompare('Time to decompose') != 0 && {width: 20, height: 20, marginTop: '3%'} || {width: 28, height: 28, marginTop: '1%'}}
+                                            source={selectedcategory4.localeCompare('Time to decompose') != 0 && Profiles.water || Profiles.clock}
                                         /> }
                                         <Text style={selectedcategory4.localeCompare('Time to decompose') != 0 && styles.boldTextFormatBlueCompare || styles.boldTextFormatRedCompare}>{numberWithCommas(parseInt(f4[selectedcategory4])*prod4Total)} {f4[selectedmetrictodisplay]}</Text>
                                     </View>
@@ -659,10 +680,10 @@ export const comparePage = ({route}) => {
                                            resizeMode="contain"/>
                                     <Text style={styles.boldTextFormatCompare}>{prod5}</Text>
                                     <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                                        {selectedcategory5.localeCompare('Time to decompose') != 0 && <Image
-                                            style={{width: 20, height: 20, marginTop: '3%'}}
-                                            source={Profiles.water}
-                                        />}
+                                        {<Image
+                                            style={selectedcategory5.localeCompare('Time to decompose') != 0 && {width: 20, height: 20, marginTop: '3%'} || {width: 28, height: 28, marginTop: '1%'}}
+                                            source={selectedcategory5.localeCompare('Time to decompose') != 0 && Profiles.water || Profiles.clock}
+                                        /> }
                                         <Text style={selectedcategory5.localeCompare('Time to decompose') != 0 && styles.boldTextFormatBlueCompare || styles.boldTextFormatRedCompare}>{numberWithCommas(parseInt(f5[selectedcategory5])*prod5Total)} {f6[selectedmetrictodisplay]}</Text>
                                     </View>
                                     <Text style={styles.textFormatCompare}>{f5[selectedmeasurement]}</Text>
@@ -689,9 +710,9 @@ export const comparePage = ({route}) => {
                                            resizeMode="contain"/>
                                     <Text style={styles.boldTextFormatCompare}>{prod6}</Text>
                                     <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                                        {selectedcategory6.localeCompare('Time to decompose') != 0 && <Image
-                                            style={{width: 20, height: 20, marginTop: '3%'}}
-                                            source={Profiles.water}
+                                        {<Image
+                                            style={selectedcategory6.localeCompare('Time to decompose') != 0 && {width: 20, height: 20, marginTop: '3%'} || {width: 28, height: 28, marginTop: '1%'}}
+                                            source={selectedcategory6.localeCompare('Time to decompose') != 0 && Profiles.water || Profiles.clock}
                                         /> }
                                         <Text style={selectedcategory6.localeCompare('Time to decompose') != 0 && styles.boldTextFormatBlueCompare || styles.boldTextFormatRedCompare}>{numberWithCommas(parseInt(f6[selectedcategory6])*prod6Total)} {f6[selectedmetrictodisplay]}</Text>
                                     </View>
