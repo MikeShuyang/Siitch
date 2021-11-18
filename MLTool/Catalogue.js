@@ -266,6 +266,7 @@ export default function Catalogue ({navigation}){
     const reset = () => {
         showThankYou(false);
         showCategories(false);
+        setCategory("");
         showSubmit(false);
         toggleSubmit(false);
         fadeAnim.setValue(1);

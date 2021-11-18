@@ -111,7 +111,7 @@ export const RankingPage = ({category, id}) => {
     }
 
     const unitTitle = (category, unit) => {
-        if(category === "Everyday Items" || category === "Everyday Foods" || category === "All Drinks" || category === "Alcoholic") {
+        if(category === "Everyday Items" || category === "Everyday Foods" || category === "All Drinks" || category === "Alcoholic" || category === "Non-Alcoholic") {
             return <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: '5%'}}></View>;
         }
         else {
@@ -165,7 +165,7 @@ export const RankingPage = ({category, id}) => {
                     {
                         sortable.map((item, index) => {
                             return(
-                                <RankingItem key={index} max={max} cost={parseInt(item[1])} item={item[0]} image={Profiles[item[0]] ? Profiles[item[0]] : Profiles.water_drops} unit={unit} category={id} /> 
+                                <RankingItem key={index} max={max} cost={parseInt(item[1])} item={item[0]} image={Profiles[item[0]] ? Profiles[item[0]] : Profiles.water_drops} unit={unit} category={id}/> 
                             )
                         })
                     }
