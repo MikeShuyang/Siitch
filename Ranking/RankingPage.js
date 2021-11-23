@@ -80,7 +80,7 @@ export const RankingPage = ({category, id}) => {
 
             if(Object.keys(items).length > 0) {
                 for (let item in items) {
-                    sortable.push([item, processDatabaseValue(items[item][parameter])]);
+                    sortable.push([item, processDatabaseValue(items[item][parameter]), (unit === 'G' ? items[item]["Display Unit Imperial"] : items[item]["Display Unit Metric"])]);
                 }
     
                 sortable.sort(function(a, b) {
@@ -165,7 +165,7 @@ export const RankingPage = ({category, id}) => {
                     {
                         sortable.map((item, index) => {
                             return(
-                                <RankingItem key={index} max={max} cost={parseInt(item[1])} item={item[0]} image={Profiles[item[0]] ? Profiles[item[0]] : Profiles.water_drops} unit={unit} category={id}/> 
+                                <RankingItem key={index} max={max} cost={parseInt(item[1])} item={item[0]} image={Profiles[item[0]] ? Profiles[item[0]] : Profiles.water_drops} unit={unit} category={id} displayUnit={item[2]}/> 
                             )
                         })
                     }

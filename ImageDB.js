@@ -117,6 +117,7 @@ const Profiles = {
     Yogurt: require('./images/Image_new/Everyday_Foods/yogurt.png'),
     Salad: require('./images/Image_new/Everyday_Foods/salad.png'),
     'Toast 1 slice': require('./images/Image_new/Everyday_Foods/toast.png'),
+    Toast: require('./images/Image_new/Everyday_Foods/toast.png'),
     Chocolate: require('./images/Image_new/Everyday_Foods/chocolate.png'),
     'Sugar cane': require('./images/Image_new/Everyday_Foods/sugar.png'),
     'Soy sauce': require('./images/Image_new/Everyday_Foods/soy_sauce.png'),
