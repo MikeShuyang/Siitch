@@ -381,7 +381,7 @@ export const comparePage = ({route}) => {
         let prod3Val = selectedcategory3.localeCompare('Time to decompose') != 0 ? parseInt(f3[selectedcategory3]*prod3Total) : Number.MAX_VALUE;
         let prod4Val = selectedcategory4.localeCompare('Time to decompose') != 0 ? parseInt(f4[selectedcategory4]*prod4Total) : Number.MAX_VALUE;
         let prod5Val = selectedcategory5.localeCompare('Time to decompose') != 0 ? parseInt(f5[selectedcategory5]*prod5Total) : Number.MAX_VALUE;
-        let prod6Val = selectedcategory6.localeCompare('Time to decompose') != 0 ? parseInt(f6[selectedcategory6]*prod1Total) : Number.MAX_VALUE;
+        let prod6Val = selectedcategory6.localeCompare('Time to decompose') != 0 ? parseInt(f6[selectedcategory6]*prod6Total) : Number.MAX_VALUE;
 
         if(prod3 && !prod4 && !prod5 && !prod6) {
             return Math.min(prod1Val, prod2Val, prod3Val);
@@ -426,6 +426,13 @@ export const comparePage = ({route}) => {
             return Math.min(prod1Val, prod2Val, prod4Val, prod5Val, prod6Val);
         }
         else if(prod3 && prod4 && prod5 && prod6) {
+            console.log("-------")
+            console.log(prod1Val)
+            console.log(prod2Val)
+            console.log(prod3Val)
+            console.log(prod4Val)
+            console.log(prod5Val)
+            console.log(prod6Val)
             return Math.min(prod1Val, prod2Val, prod3Val, prod4Val, prod5Val, prod6Val);
         }
         return Math.min(prod1Val, prod2Val);
@@ -905,7 +912,8 @@ export const comparePage = ({route}) => {
 
 
 function getTextStyle(val1, val2) {
-    if(val1 == val2) {
+    console.log(val1, val2)
+    if(val1 === val2) {
         return {
             flex: 1,
             borderColor: '#6dbd64',
