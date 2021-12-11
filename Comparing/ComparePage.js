@@ -440,7 +440,7 @@ export const comparePage = ({route}) => {
 
     const numberWithCommas = (x) => {
         if(isNaN(x)){
-            return "NA"
+            return "Will never"
         }
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
@@ -487,7 +487,7 @@ export const comparePage = ({route}) => {
                                 ((selectedcategory5.localeCompare('Time to decompose') != 0 && isProduct5Present) ? parseInt(f5[selectedcategory5])*prod5Total : 0) +
                                 ((selectedcategory6.localeCompare('Time to decompose') != 0 && isProduct6Present) ? parseInt(f6[selectedcategory6])*prod6Total : 0))
                                 .toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }
-                                {unit == 'G' ? ' gal.' : ' li.'} </Text>
+                                {unit == 'G' ? ' G.' : ' L.'} </Text>
                         </View>
                     </View>
                     {/* <View style={{flexDirection:'column',alignItems:'center',marginTop:'5%', marginBottom: '5%', width: DeviceWidth*0.7}}>
